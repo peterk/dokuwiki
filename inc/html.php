@@ -146,7 +146,7 @@ function html_topbtn(){
     global $lang;
 
     $ret  = '';
-    $ret  = '<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" title="'.$lang['btn_top'].'" /></a>';
+    $ret  = '<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="'.$lang['btn_top'].'" onclick="window.scrollTo(0, 0)" /></a>';
 
     return $ret;
 }
@@ -192,8 +192,6 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
 
     if ($tooltip!='') {
         $tip = htmlspecialchars($tooltip);
-    }else{
-        $tip = htmlspecialchars($label);
     }
 
     $ret .= '<input type="submit" value="'.hsc($label).'" class="button" ';
@@ -201,7 +199,11 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip='',$label=false
         $tip .= ' ['.strtoupper($akey).']';
         $ret .= 'accesskey="'.$akey.'" ';
     }
-    $ret .= 'title="'.$tip.'" ';
+
+    /* Only add title attribute of there was a tooltip text */
+    if ($tooltip!='') {
+        $ret .= 'title="'.$tip.'" ';
+    }
     $ret .= '/>';
     $ret .= '</div></form>';
 
